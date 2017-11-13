@@ -1,0 +1,30 @@
+using System;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           
+            double num;
+            Console.WriteLine(" Скролько бутылок ты видишь? ");
+            num = Convert.ToDouble(Console.ReadLine());
+            if (num == 1 ) // && и. || - или
+
+                Console.WriteLine(" Добро пожаловать в клуб ");
+
+            else if (num == 5)
+
+                Console.WriteLine(" Ты попал в 5 бутылок водки... Вставай! ");
+
+            else
+            
+                Console.WriteLine(" Тут что-то написанно ");
+
+            string name = num != 5 ? " Сладенькай " : " Петрович! ";
+            Console.WriteLine(name);
+  
+        }
+    }
+}
