@@ -1,30 +1,67 @@
-using System;
+#include "stdafx.h"
+#include <iostream>
+using namespace std;
 
-namespace ConsoleApp1
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-           
-            double num;
-            Console.WriteLine(" Скролько бутылок ты видишь? ");
-            num = Convert.ToDouble(Console.ReadLine());
-            if (num == 1 ) // && и. || - или
+// Наша структура
+struct node {
+	int info;  // Информационное поле
+	node *l, *r;  // Левая и Правая часть дерева
+};
 
-                Console.WriteLine(" Добро пожаловать в клуб ");
+node *tree = nullptr;  // Объявляем переменную, тип которой структура Дерево
+node *tree1 = nullptr;  // Объявляем переменную, тип которой структура Дерево
 
-            else if (num == 5)
+						// ФУНКЦИЯ ЗАПИСИ ЭЛЕМЕНТА В БИНАРНОЕ ДЕРЕВО
+void push(int a, node **t) {
+	if ((*t) == nullptr)  // Если дерева не существует
+	{
+		(*t) = new node;  // Выделяем память
+		(*t)->info = a;  // Кладем в выделенное место аргумент a
+		(*t)->l = (*t)->r = nullptr;  // Очищаем память для следующего роста
+		return;  // Заложили семечко, выходим
+	}
 
-                Console.WriteLine(" Ты попал в 5 бутылок водки... Вставай! ");
-
-            else
-            
-                Console.WriteLine(" Тут что-то написанно ");
-
-            string name = num != 5 ? " Сладенькай " : " Петрович! ";
-            Console.WriteLine(name);
-  
-        }
-    }
+	// Дерево есть
+	if (a > (*t)->info)
+		push(a, &(*t)->r);  // Если аргумент а больше чем текущий элемент, кладем его вправо
+	else
+		push(a, &(*t)->l);  // Иначе кладем его влево
 }
+
+// Функция сравнения двух деревьев
+bool check(node *n1, node *n2) {
+	return n1 && n2 ? n1->info == n2->info && check(n1->l, n2->l) && check(n1->r, n2->r) : !n1 && !n2;
+}
+
+// ФУНКЦИЯ ОТОБРАЖЕНИЯ ДЕРЕВА НА ЭКРАНЕ
+void printLevel(node *t, int level) {
+	if (t == nullptr) {
+		// Если дерево пустое, то отображать нечего, выходим
+		return;
+	}
+	else {
+		printLevel(t->l, level - 1);  // С помощью рекурсии посещаем левое поддерево
+		if (level == 0) {
+			// level будет равен нулю на нужной глубине, так как при каждом рекурсивном вызове значение level уменьшается на один
+			cout << t->info << endl;  // Показываем элемент, если он на нужном нам уровне
+		}
+		cout << (t->r, level - 1);  // С помощью рекурсии посещаем правое поддерево
+	}
+}
+
+int main() {
+	setlocale(LC_ALL, "Russian");
+	int n;  // Количество элементов
+	int s;  // Число, передаваемое в дерево
+	cout << " введите количество элементов\n ";
+	cin >> n;  // Вводим количество элементов
+
+	for (int i = 0; i < n; ++i) {
+		cout << " ведите число\n ";
+		cin >> s;  // Считываем элемент за элементом
+		push(s, &tree);  // И каждый кладем в дерево
+	}
+	cout <<  "ваше дерево\n ";
+	cout << ( tree );
+	return 0; 
+};
